@@ -1,6 +1,16 @@
 import questionary, time, os, random
 from colorama import Back, Fore, Style, init
-print("\nBEM VINDO AO COLORSEEK") #escrever colorido
+
+cores = {
+    "azul": [Back.BLUE, Fore.BLUE], 
+    "vermelho": [Back.RED, Fore.RED], 
+    "verde": [Back.GREEN, Fore.GREEN], 
+    "amarelo": [Back.YELLOW, Fore.YELLOW]
+}
+msg = "BEM VINDO AO COLORSEEK"
+for char in msg:
+    print(cores[random.choice(["azul", "vermelho", "verde", "amarelo"])][1] + char, end="")
+
 
 r = questionary.select('Escolha uma opção:', choices=[
         'Jogar',
@@ -11,13 +21,6 @@ r = questionary.select('Escolha uma opção:', choices=[
 if r == "Jogar":
     init(autoreset=True)
 
-    cores = {
-        "azul": [Back.BLUE, Fore.BLUE], 
-        "vermelho": [Back.RED, Fore.RED], 
-        "verde": [Back.GREEN, Fore.GREEN], 
-        "amarelo": [Back.YELLOW, Fore.YELLOW]
-    }
-
  
     sequencia = []
     nivel = 1
@@ -26,7 +29,7 @@ if r == "Jogar":
         for e in range (len(sequencia)):
             os.system("cls" if os.name == "nt" else "clear")
             for _ in range(4):
-                print(cores[sequencia[e]]+ "        " + Style.RESET_ALL)
+                print(cores[sequencia[e]][0]+ "        " + Style.RESET_ALL)
             time.sleep(0.5) 
             os.system("cls" if os.name == "nt" else "clear")
             time.sleep(0.5)
@@ -35,7 +38,7 @@ if r == "Jogar":
         sequencia.append(random.choice(["azul", "vermelho", "verde", "amarelo"]))
         os.system("cls" if os.name == "nt" else "clear")
         for _ in range(4):
-            print(cores[sequencia[-1]]+ "        " + Style.RESET_ALL)
+            print(cores[sequencia[-1]][0]+ "        " + Style.RESET_ALL)
         time.sleep(0.5)
         os.system("cls" if os.name == "nt" else "clear")
         time.sleep(0.5)
@@ -49,12 +52,12 @@ if r == "Jogar":
             ]).ask()
 
             if resposta != sequencia[i]:
-                print(sequencia[-1]+ "😢 Errou")
+                print(sequencia[-1] + " 😢 Errou")
                 print("Seu nível final foi: {} pontos".format(nivel))
                 exit()
         
         nivel += 1
-        print(Fore.GREEN + "✔️ Correto! Voce passou para o nível {}".format(nivel))
+        print(cores[sequencia[-1]][1] + "✔️ Correto! Voce passou para o nível {}".format(nivel))
         time.sleep(0.8)
 else:
     print('Jogo finalizado')
